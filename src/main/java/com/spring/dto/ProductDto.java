@@ -19,4 +19,9 @@ public class ProductDto {
     return price;
   }
 
+  @Override
+  public String toString() {
+    return String.format("ProductDto {name = %s, price = %.2f", this.name, this.price);
+  }
+
 }
