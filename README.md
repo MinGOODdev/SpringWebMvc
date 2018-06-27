@@ -1,18 +1,20 @@
-# Spring Framework
-* Practice
+# Spring Framework Practice
 * Junit & MockMvc
-* MyBatis Config for Spring 4.X (Not Spring Boot)
+* MyBatis Config for Spring 4.x (Not Spring Boot)
 * Log ...
 
-## 사용된 도구
-* Spring Framework
+## Everything that are using
+* Windows 10
+* IntelliJ IDEA ULTIMATE 2018.1
+* Tomcat 8.5
 * Maven
-* Tomcat
-* IntelliJ IDEA 
+* Spring Framework 4.x
+* Junit 4.12
 * MySQL
+* MyBatis
 
-## 저자
-* **조민국** - [MinGOODdev](https://github.com/MinGOODdev)
+## Author
+* **Min Kuk Jo** - [MinGOODdev](https://github.com/MinGOODdev)
 
 ---
 
