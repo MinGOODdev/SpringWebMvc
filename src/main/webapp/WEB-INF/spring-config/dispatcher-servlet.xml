@@ -12,7 +12,12 @@
 
     <mvc:annotation-driven/>
 
-    <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <!-- Static Resources Directory -->
+    <!--<mvc:resources mapping="/resources/**" location="/resources/"/>-->
+    <mvc:resources mapping="/bower_components/**" location="/resources/bower_components/"/>
+    <mvc:resources mapping="/plugins/**" location="/resources/plugins/"/>
+    <mvc:resources mapping="/dist/**" location="/resources/dist/"/>
+
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
