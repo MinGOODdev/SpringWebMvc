@@ -1,4 +1,4 @@
-package com.spring.dto;
+package com.spring.member.dto;
 
 import java.util.Date;
 

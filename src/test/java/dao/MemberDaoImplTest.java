@@ -1,7 +1,7 @@
 package dao;
 
-import com.spring.dao.MemberDaoImpl;
-import com.spring.dto.Member;
+import com.spring.member.dao.MemberDaoImpl;
+import com.spring.member.dto.Member;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

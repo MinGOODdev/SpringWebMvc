@@ -1,4 +1,4 @@
-package com.spring.controller;
+package com.spring.example.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,7 @@ public class ExStringController {
   @RequestMapping("doC")
   public String doC(@ModelAttribute("msg") String msg) {
     logger.info("/doC called ...");
-    return "ex/result";
+    return "example/result";
   }
 
 }

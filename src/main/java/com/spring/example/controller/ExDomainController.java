@@ -1,6 +1,6 @@
-package com.spring.controller;
+package com.spring.example.controller;
 
-import com.spring.dto.ProductDto;
+import com.spring.example.dto.ProductDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ public class ExDomainController {
     logger.info("/doD called ...");
     model.addAttribute(productDto);
 
-    return "ex/product";
+    return "example/product";
   }
 
 }

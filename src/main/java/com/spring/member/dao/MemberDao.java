@@ -1,6 +1,6 @@
-package com.spring.dao;
+package com.spring.member.dao;
 
-import com.spring.dto.Member;
+import com.spring.member.dto.Member;
 import org.apache.ibatis.annotations.Param;
 
 public interface MemberDao {
