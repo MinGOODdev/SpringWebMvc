@@ -1,6 +1,6 @@
-package com.spring.member.dao;
+package com.spring.mybatis.example.dao;
 
-import com.spring.member.dto.Member;
+import com.spring.mybatis.example.dto.Member;
 import org.apache.ibatis.annotations.Param;
 
 public interface MemberDao {

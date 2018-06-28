@@ -1,6 +1,6 @@
-package com.spring.member.dao;
+package com.spring.mybatis.example.dao;
 
-import com.spring.member.dto.Member;
+import com.spring.mybatis.example.dto.Member;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,7 @@ public class MemberDaoImpl implements MemberDao {
 
   private static final Logger logger = LoggerFactory.getLogger(MemberDaoImpl.class);
 
-  private static final String NAMESPACE = "com.spring.member.dao.MemberDao";
+  private static final String NAMESPACE = "MemberDao";
 
   @Inject
   private SqlSession sqlSession;

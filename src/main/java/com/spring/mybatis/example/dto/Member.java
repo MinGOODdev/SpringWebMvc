@@ -1,4 +1,4 @@
-package com.spring.member.dto;
+package com.spring.mybatis.example.dto;
 
 import java.util.Date;
 
