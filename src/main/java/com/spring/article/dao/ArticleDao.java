@@ -12,7 +12,7 @@ public interface ArticleDao {
 
   void updateArticle(Article article);
 
-  void deleteArticle(Integer no);
+  void deleteArticle(Integer articleNo);
 
   List<Article> findAllArticle();
 
