@@ -2,8 +2,6 @@ package com.spring.mybatis.example.dao;
 
 import com.spring.mybatis.example.dto.Member;
 import org.apache.ibatis.session.SqlSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
@@ -13,9 +11,7 @@ import java.util.Map;
 @Repository
 public class MemberDaoImpl implements MemberDao {
 
-  private static final Logger logger = LoggerFactory.getLogger(MemberDaoImpl.class);
-
-  private static final String NAMESPACE = "MemberDao";
+  private static final String NAMESPACE = "com.spring.mybatis.example.dao.MemberDao";
 
   @Inject
   private SqlSession sqlSession;
