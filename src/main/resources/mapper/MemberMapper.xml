@@ -13,12 +13,12 @@
         VALUES (#{userId}, #{userPw}, #{userName}, #{email})
     </insert>
 
-    <select id="findByUserId" resultType="com.spring.mybatis.example.dto.Member">
+    <select id="findByUserId" resultType="Member">
         SELECT * FROM tb_member
         WHERE userId = #{userId}
     </select>
 
-    <select id="findByUserIdAndUserPw" resultType="com.spring.mybatis.example.dto.Member">
+    <select id="findByUserIdAndUserPw" resultType="Member">
         SELECT * FROM tb_member
         WHERE userId = #{userId} AND userPw = #{userPw}
     </select>

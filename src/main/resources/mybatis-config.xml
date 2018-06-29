@@ -4,4 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+    <typeAliases>
+        <typeAlias type="com.spring.mybatis.example.dto.Member" alias="Member"/>
+        <typeAlias type="com.spring.article.dto.Article" alias="Article"/>
+    </typeAliases>
+
 </configuration>

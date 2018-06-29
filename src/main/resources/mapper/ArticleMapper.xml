@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.article.dao.ArticleDao">
+
+    <insert id="createArticle">
+        INSERT INTO tb_article (articleNo, title, content, writer, regDate, viewCnt)
+        VALUES (#{articleNo}, #{title}, #{content}, #{writer}, #{regDate}, #{viewCnt})
+    </insert>
+
+    <select id="findByArticleNo" resultType="Article">
+        SELECT articleNo, title, content, writer, regDate, viewCnt
+        FROM tb_article
+        WHERE articleNo = #{articleNo}
+    </select>
+
+    <update id="updateArticle">
+        UPDATE tb_article
+        SET
+          title = #{title},
+          content = #{content}
+        WHERE articleNo = #{articleNo}
+    </update>
+
+    <delete id="deleteArticle">
+        DELETE FROM tb_article
+        WHERE articleNo = #{articleNo}
+    </delete>
+
+    <select id="findAllArticle" resultType="Article">
+        SELECT articleNo, title, content, writer, regDate, viewCnt
+        FROM tb_article
+        WHERE articleNo > 0
+        ORDER BY articleNo DESC, regDate DESC
+    </select>
+
+    <!--
+    Java field name과 Database column name이 다를 경우
+    아래와 같이 resultMap을 만들고 resultType에 resultMap id를 넣어주면 됩니다.
+    -->
+    <!--<resultMap id="ArticleResultMap" type="Article">-->
+    <!--<id property="articleNo" column="db_column1"/>-->
+    <!--<result property="title" column="db_column2"/>-->
+    <!--</resultMap>-->
+
+</mapper>
