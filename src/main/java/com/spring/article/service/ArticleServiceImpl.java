@@ -2,6 +2,7 @@ package com.spring.article.service;
 
 import com.spring.article.dao.ArticleDao;
 import com.spring.article.dto.Article;
+import com.spring.commons.paging.Criteria;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -41,4 +42,15 @@ public class ArticleServiceImpl implements ArticleService {
   public List<Article> findAllArticle() {
     return articleDao.findAllArticle();
   }
+
+  @Override
+  public List<Article> findAllArticlePaging(Criteria criteria) {
+    return articleDao.findAllArticlePaging(criteria);
+  }
+
+  @Override
+  public int countArticles(Criteria criteria) {
+    return articleDao.countArticles(criteria);
+  }
+
 }

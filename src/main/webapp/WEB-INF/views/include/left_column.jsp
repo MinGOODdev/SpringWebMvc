@@ -42,7 +42,7 @@
             <li class="header">메뉴</li>
             <%-- Optionally, you can add icons to the links --%>
             <li class="active"><a href="${path}/article/write"><i class="fa fa-edit"></i> <span>게시글 작성</span></a></li>
-            <li><a href="${path}/article/list"><i class="fa fa-list"></i> <span>게시글 목록</span></a></li>
+            <li><a href="${path}/article/listPaging?page=1"><i class="fa fa-list"></i> <span>게시글 목록</span></a></li>
             <li class="treeview active">
                 <a href="#">
                     <i class="fa fa-clipboard"></i>

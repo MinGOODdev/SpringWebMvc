@@ -35,6 +35,20 @@
         ORDER BY articleNo DESC, regDate DESC
     </select>
 
+    <select id="findAllArticlePaging" resultType="Article">
+        SELECT articleNo, title, content, writer, regDate, viewCnt
+        FROM tb_article
+        WHERE articleNo > 0
+        ORDER BY articleNo DESC, regDate DESC
+        LIMIT #{pageStart}, #{perPageNum}
+    </select>
+    
+    <select id="countArticles" resultType="int">
+        SELECT COUNT(articleNo)
+        FROM tb_article
+        WHERE articleNo > 0
+    </select>
+
     <!--
     Java field name과 Database column name이 다를 경우
     아래와 같이 resultMap을 만들고 resultType에 resultMap id를 넣어주면 됩니다.

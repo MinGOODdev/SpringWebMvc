@@ -2,7 +2,11 @@
 * [Controller Example](./src/main/java/com/spring/example)
 * [Mybatis Example](./src/main/java/com/spring/mybatis/example)
 * [Article](./src/main/java/com/spring/article)
+* [ExceptionHandler](src/main/java/com/spring/commons)
 * [Test Code](./src/test/java)
+
+## Docs
+* [Paging Explanation](./docs/Paging.md)
 
 ## Everything that are using
 * Windows 10
@@ -19,5 +23,3 @@
 * **Min Kuk Jo** - [MinGOODdev](https://github.com/MinGOODdev)
 
 ---
-
-
