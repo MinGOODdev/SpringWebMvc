@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.article.dao.ReplyDao">
+
+    <select id="findAllReply" resultMap="ReplyResultMap">
+        SELECT replyNo, articleNo, replyText, replyWriter, regDate, updateDate
+        FROM tb_reply
+        WHERE articleNo = #{articleNo}
+        ORDER BY replyNo
+    </select>
+
+    <insert id="createReply">
+        INSERT INTO tb_reply (articleNo, replyText, replyWriter)
+        VALUES (#{articleNo}, #{replyText}, #{replyWriter})
+    </insert>
+
+    <update id="updateReply">
+        UPDATE tb_reply
+        SET
+          replyText = #{replyText},
+          updateDate = #{updateDate}
+        WHERE replyNo = #{replyNo}
+    </update>
+
+    <delete id="deleteReply">
+        DELETE FROM tb_reply
+        WHERE replyNo = #{replyNo}
+    </delete>
+
+    <!-- DB 컬럼명과 DTO 변수명이 다를 경우 -->
+    <resultMap id="ReplyResultMap" type="Reply">
+        <id property="replyNo" column="replyNo"/>
+        <result property="articleNo" column="articleNo"/>
+        <result property="replyText" column="replyText"/>
+        <result property="replyWriter" column="replyWriter"/>
+        <result property="regDate" column="regDate"/>
+        <result property="updateDate" column="updateDate"/>
+    </resultMap>
+
+</mapper>
