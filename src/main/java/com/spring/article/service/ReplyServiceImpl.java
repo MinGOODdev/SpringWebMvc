@@ -2,6 +2,7 @@ package com.spring.article.service;
 
 import com.spring.article.dao.ReplyDao;
 import com.spring.article.dto.Reply;
+import com.spring.commons.paging.Criteria;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -35,6 +36,16 @@ public class ReplyServiceImpl implements ReplyService {
   @Override
   public void deleteReply(Integer replyNo) {
     replyDao.deleteReply(replyNo);
+  }
+
+  @Override
+  public List<Reply> findAllReplyPaging(Integer articleNo, Criteria criteria) {
+    return replyDao.findAllReplyPaging(articleNo, criteria);
+  }
+
+  @Override
+  public int countReplies(Integer articleNo) {
+    return replyDao.countReplies(articleNo);
   }
 
 }

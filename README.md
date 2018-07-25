@@ -1,12 +1,16 @@
 # Spring Framework Practice
 * [Controller Example](./src/main/java/com/spring/example)
 * [Mybatis Example](./src/main/java/com/spring/mybatis/example)
-* [Article](./src/main/java/com/spring/article)
 * [ExceptionHandler](src/main/java/com/spring/commons)
+* [Default Article](./src/main/java/com/spring/article/controller/ArticleController.java)
+* [Paging Article](./src/main/java/com/spring/article/controller/PagingArticleController.java)
+* [Paging + Search Article](./src/main/java/com/spring/article/controller/PagingSearchArticleController.java)
+* [Reply(REST)](./src/main/java/com/spring/article/controller/ReplyController.java)
 * [Test Code](./src/test/java)
 
 ## Docs
 * [Paging Explanation](./docs/Paging.md)
+* [REST 방식의 ReplyController](./docs/Rest%20방식의%20ReplyController.md)
 
 ## Everything that are using
 * Windows 10

@@ -29,6 +29,20 @@
         WHERE replyNo = #{replyNo}
     </delete>
 
+    <select id="findAllReplyPaging" resultMap="ReplyResultMap">
+        SELECT replyNo, articleNo, replyText, replyWriter, regDate, updateDate
+        FROM tb_reply
+        WHERE articleNo = #{articleNo}
+        ORDER BY replyNo
+        LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
+    </select>
+
+    <select id="countReplies" resultType="int">
+        SELECT COUNT(articleNo)
+        FROM tb_reply
+        WHERE articleNo = #{articleNo}
+    </select>
+
     <!-- DB 컬럼명과 DTO 변수명이 다를 경우 -->
     <resultMap id="ReplyResultMap" type="Reply">
         <id property="replyNo" column="replyNo"/>
