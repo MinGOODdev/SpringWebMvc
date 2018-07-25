@@ -12,7 +12,7 @@
 <%-- head --%>
 <%@ include file="../include/head.jsp" %>
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini layout-boxed">
 <div class="wrapper">
 
     <%-- Main Header --%>
@@ -30,8 +30,8 @@
                 <small>스프링연습예제</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Main</a></li>
-                <li class="active">Home</li>
+                <li><a href="/"><i class="fa fa-dashboard"></i> Main</a></li>
+                <li class="active">Modify</li>
             </ol>
         </section>
 

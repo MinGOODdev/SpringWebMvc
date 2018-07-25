@@ -10,16 +10,16 @@
 <html>
 
 <%-- head --%>
-<%@ include file="../include/head.jsp" %>
+<%@ include file="../../include/head.jsp" %>
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini layout-boxed">
 <div class="wrapper">
 
     <%-- Main Header --%>
-    <%@ include file="../include/main_header.jsp" %>
+    <%@ include file="../../include/main_header.jsp" %>
 
     <%-- Left Side Column --%>
-    <%@ include file="../include/left_column.jsp" %>
+    <%@ include file="../../include/left_column.jsp" %>
 
     <%-- Content Wrapper --%>
     <div class="content-wrapper">
@@ -30,8 +30,8 @@
                 <small>스프링연습예제</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Main</a></li>
-                <li class="active">Home</li>
+                <li><a href="/"><i class="fa fa-dashboard"></i> Main</a></li>
+                <li class="active">List Paging</li>
             </ol>
         </section>
 
@@ -57,7 +57,10 @@
                                 <tr>
                                     <td>${article.articleNo}</td>
                                     <td>
-                                        <a href="${path}/article/read?articleNo=${article.articleNo}">${article.title}</a>
+                                        <%--<a href="${path}/article/read?articleNo=${article.articleNo}">${article.title}</a>--%>
+                                        <a href="${path}/article/readPaging${pageMaker.makeQuery(pageMaker.criteria.page)}&articleNo=${article.articleNo}">
+                                            ${article.title}
+                                        </a>
                                     </td>
                                     <td>${article.writer}</td>
                                     <td><fmt:formatDate value="${article.regDate}" pattern="yyyy-MM-dd a HH:mm"/></td>
@@ -71,7 +74,8 @@
                         <div class="text-center">
                             <ul class="pagination">
                                 <c:if test="${pageMaker.prev}">
-                                    <li><a href="${path}/article/listPaging?page=${pageMaker.startPage - 1}">이전</a></li>
+                                    <%--<li><a href="${path}/article/listPaging?page=${pageMaker.startPage - 1}">이전</a></li>--%>
+                                    <li><a href="${path}/article/listPaging${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a></li>
                                 </c:if>
                                 <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="index">
                                     <li <c:out value="${pageMaker.criteria.page == index ? 'class=active' : ''}"/> >
@@ -79,16 +83,17 @@
                                     </li>
                                 </c:forEach>
                                 <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                    <li><a href="${path}/article/listPaging?page=${pageMaker.endPage + 1}">다음</a></li>
+                                    <%--<li><a href="${path}/article/listPaging?page=${pageMaker.endPage + 1}">다음</a></li>--%>
+                                    <li><a href="${path}/article/listPaging${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>
                                 </c:if>
                             </ul>
                         </div>
                     </div>
                     <div class="box-footer">
                         <div class="pull-right">
-                            <button type="button" class="btn btn-success btn-flat" id="writeBtn">
-                                <i class="fa fa-pencil"></i> 글쓰기
-                            </button>
+                            <a href="${path}/article/write">
+                                <button type="button" class="btn btn-success btn-flat" id="writeBtn"><i class="fa fa-pencil"></i> 글쓰기</button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -99,20 +104,20 @@
     <%-- /.content-wrapper --%>
 
     <%-- Main Footer --%>
-    <%@ include file="../include/main_footer.jsp" %>
+    <%@ include file="../../include/main_footer.jsp" %>
 
 </div>
 
-<%@ include file="../include/plugin_js.jsp" %>
+<%@ include file="../../include/plugin_js.jsp" %>
 <script>
     var result = "${msg}";
     if (result == "regSuccess") {
         alert("게시글 등록이 완료되었습니다.");
     }
-    else if (result == "modifySuccess") {
+    else if (result == "modifyPagingSuccess") {
         alert("게시글 수정이 완료되었습니다.");
     }
-    else if (result == "deleteSuccess") {
+    else if (result == "deletePagingSuccess") {
         alert("게시글 삭제가 완료되었습니다.");
     }
 </script>

@@ -2,8 +2,6 @@ package com.spring.article.controller;
 
 import com.spring.article.dto.Article;
 import com.spring.article.service.ArticleService;
-import com.spring.commons.paging.Criteria;
-import com.spring.commons.paging.PageMaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -26,27 +24,6 @@ public class ArticleController {
   @Inject
   public ArticleController(ArticleService articleService) {
     this.articleService = articleService;
-  }
-
-  /**
-   * 페이징 처리된 전체 목록
-   *
-   * @param model
-   * @param criteria
-   * @return
-   */
-  @RequestMapping(value = "/listPaging", method = RequestMethod.GET)
-  public String listPaging(Model model, Criteria criteria) {
-    logger.info("listPaging ...");
-
-    PageMaker pageMaker = new PageMaker();
-    pageMaker.setCriteria(criteria);
-    pageMaker.setTotalCount(articleService.countArticles(criteria));
-
-    model.addAttribute("articles", articleService.findAllArticlePaging(criteria));
-    model.addAttribute("pageMaker", pageMaker);
-
-    return "article/list_paging";
   }
 
   /**

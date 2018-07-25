@@ -1,5 +1,8 @@
 package com.spring.commons.paging;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class PageMaker {
 
   private int totalCount;                   // 전체 게시글 수
@@ -66,6 +69,15 @@ public class PageMaker {
 
   public void setDisplayPageNumCount(int displayPageNumCount) {
     this.displayPageNumCount = displayPageNumCount;
+  }
+
+  public String makeQuery(int page) {
+    UriComponents uriComponents = UriComponentsBuilder.newInstance()
+            .queryParam("page", page)
+            .queryParam("perPageNum", criteria.getPerPageNum())
+            .build();
+
+    return uriComponents.toUriString();
   }
 
   private void calculateData() {

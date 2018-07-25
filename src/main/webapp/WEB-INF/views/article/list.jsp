@@ -12,7 +12,7 @@
 <%-- head --%>
 <%@ include file="../include/head.jsp" %>
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini layout-boxed">
 <div class="wrapper">
 
     <%-- Main Header --%>
@@ -30,8 +30,8 @@
                 <small>스프링연습예제</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Main</a></li>
-                <li class="active">Home</li>
+                <li><a href="/"><i class="fa fa-dashboard"></i> Main</a></li>
+                <li class="active">List</li>
             </ol>
         </section>
 
@@ -69,9 +69,9 @@
                     </div>
                     <div class="box-footer">
                         <div class="pull-right">
-                            <button type="button" class="btn btn-success btn-flat" id="writeBtn">
-                                <i class="fa fa-pencil"></i> 글쓰기
-                            </button>
+                            <a href="${path}/article/write">
+                                <button type="button" class="btn btn-success btn-flat" id="writeBtn"><i class="fa fa-pencil"></i> 글쓰기</button>
+                            </a>
                         </div>
                     </div>
                 </div>

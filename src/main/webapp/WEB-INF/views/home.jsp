@@ -5,7 +5,7 @@
 <%-- head --%>
 <%@ include file="include/head.jsp" %>
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini layout-boxed">
 <div class="wrapper">
 
     <%-- Main Header --%>
@@ -30,7 +30,7 @@
 
         <%-- Main content --%>
         <section class="content container-fluid">
-            <p>메인 페이지입니다.</p>
+            <h1>MinGOODdev Spring Web MVC</h1>
             <%--------------------------
               | Your Page Content Here |
               --------------------------%>

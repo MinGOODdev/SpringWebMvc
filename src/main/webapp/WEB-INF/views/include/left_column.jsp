@@ -41,22 +41,36 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">메뉴</li>
             <%-- Optionally, you can add icons to the links --%>
-            <li class="active"><a href="${path}/article/write"><i class="fa fa-edit"></i> <span>게시글 작성</span></a></li>
-            <li><a href="${path}/article/listPaging?page=1"><i class="fa fa-list"></i> <span>게시글 목록</span></a></li>
-            <li class="treeview active">
+            <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-clipboard"></i>
-                    <span>게시판</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
+                    <i class="fa fa-edit"></i> <span>게시판(기본)</span>
+                    <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="${path}/board/register"><i class="fa fa-edit"></i> <span>글쓰기(페이징 X)</span></a></li>
-                    <li><a href="${path}/board/list"><i class="fa fa-list"></i> <span>목록1 (전체)</span></a></li>
-                    <li><a href="${path}/board/paging/listCriteria"><i class="fa fa-list"></i> <span>목록2 (일부목록, 페이징 X)</span></a></li>
-                    <li><a href="${path}/board/paging/list"><i class="fa fa-list"></i> <span>목록3 (페이징 O)</span></a></li>
-                    <li><a href="${path}/board/paging/search/list"><i class="fa fa-list"></i> <span>목록4 (페이징/검색처리)</span></a></li>
+                    <li><a href="${path}/article/write"><i class="fa fa-pencil"></i> 게시글 작성</a></li>
+                    <li><a href="${path}/article/list"><i class="fa fa-list"></i>게시글 목록</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-edit"></i> <span>게시판(페이징)</span>
+                    <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="${path}/article/write"><i class="fa fa-pencil"></i> 게시글 작성</a></li>
+                    <li><a href="${path}/article/listPaging"><i class="fa fa-list"></i>게시글 목록</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-edit"></i> <span>게시판(페이징+검색)</span>
+                    <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="${path}/article/write"><i class="fa fa-pencil"></i> 게시글 작성</a></li>
+                    <li><a href="${path}/article/"><i class="fa fa-list"></i>게시글 목록</a></li>
                 </ul>
             </li>
         </ul>
