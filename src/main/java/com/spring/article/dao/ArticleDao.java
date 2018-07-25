@@ -2,6 +2,7 @@ package com.spring.article.dao;
 
 import com.spring.article.dto.Article;
 import com.spring.commons.paging.Criteria;
+import com.spring.commons.paging.SearchCriteria;
 
 import java.util.List;
 
@@ -20,5 +21,9 @@ public interface ArticleDao {
   List<Article> findAllArticlePaging(Criteria criteria);
 
   int countArticles(Criteria criteria);
+
+  List<Article> findAllArticleSearch(SearchCriteria searchCriteria);
+
+  int countSearchedArticles(SearchCriteria searchCriteria);
 
 }

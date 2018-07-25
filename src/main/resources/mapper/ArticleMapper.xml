@@ -42,7 +42,7 @@
         ORDER BY articleNo DESC, regDate DESC
         LIMIT #{pageStart}, #{perPageNum}
     </select>
-    
+
     <select id="countArticles" resultType="int">
         SELECT COUNT(articleNo)
         FROM tb_article
@@ -57,5 +57,61 @@
     <!--<id property="articleNo" column="db_column1"/>-->
     <!--<result property="title" column="db_column2"/>-->
     <!--</resultMap>-->
+
+
+    <select id="findAllArticleSearch" resultType="Article">
+        SELECT articleNo, title, content, writer, regDate, viewCnt
+        FROM tb_article
+        WHERE articleNo > 0
+
+        <!--
+        SQL 문이 중복되어 사용될 경우 include를 통해 SQL 중복을 제거하고,
+        SQL의 재사용이 가능하도록 합니다.
+        -->
+        <include refid="search"/>
+
+        ORDER BY articleNo DESC, regDate DESC
+        LIMIT #{pageStart}, #{perPageNum}
+    </select>
+
+    <select id="countSearchedArticles" resultType="int">
+        SELECT COUNT(articleNo)
+        FROM tb_article
+        WHERE articleNo > 0
+        <include refid="search"/>
+    </select>
+
+    <sql id="search">
+        <if test="searchType != null">
+            <if test="searchType == 'title'.toString()">
+                AND title LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="searchType == 'content'.toString()">
+                AND title LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="searchType == 'writer'.toString()">
+                AND title LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="searchType == 'titleContent'.toString()">
+                AND (
+                    title LIKE CONCAT('%', #{keyword}, '%')
+                    OR content LIKE CONCAT('%', #{keyword}, '%')
+                )
+            </if>
+            <if test="searchType == 'contentWriter'.toString()">
+                AND (
+                    content LIKE CONCAT('%', #{keyword}, '%')
+                    OR writer LIKE CONCAT('%', #{keyword}, '%')
+                )
+            </if>
+            <if test="searchType == 'titleContentWriter'.toString()">
+                AND (
+                    title LIKE CONCAT('%', #{keyword}, '%')
+                    OR content LIKE CONCAT('%', #{keyword}, '%')
+                    OR writer LIKE CONCAT('%', #{keyword}, '%')
+                )
+            </if>
+        </if>
+    </sql>
 
 </mapper>

@@ -70,7 +70,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="${path}/article/write"><i class="fa fa-pencil"></i> 게시글 작성</a></li>
-                    <li><a href="${path}/article/"><i class="fa fa-list"></i>게시글 목록</a></li>
+                    <li><a href="${path}/article/paging/search/list"><i class="fa fa-list"></i>게시글 목록</a></li>
                 </ul>
             </li>
         </ul>
