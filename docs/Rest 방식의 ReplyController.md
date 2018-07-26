@@ -25,8 +25,10 @@ JSON에서 사용한다는 것이 차이점입니다.
 </filter-mapping>
 ```
 
+---
+
 ### JS 코드를 이용한 댓글 목록 가져오기
-* jQuery를 이용하여 특정 게시글(1번째 게시글)의 댓글 목록을 배열 형태로 가져옵니다.
+Case 1
 ```
 <script>
     var articleNo = 1;
@@ -35,8 +37,12 @@ JSON에서 사용한다는 것이 차이점입니다.
     });
 </script>
 ```
+* jQuery를 이용하여 특정 게시글(1번째 게시글)의 댓글 목록을 배열 형태로 가져옵니다.
+* ```@RestController```의 경우 객체를 JSON 방식으로 전달하기 때문에 getJSON()을 아래와 같이 사용합니다.
 
-* 댓글 목록
+---
+
+Case 2
 ```
 <script>
     var articleNo = 1;

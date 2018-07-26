@@ -76,7 +76,7 @@
 
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-edit"> <span>AJAX</span></i>
+                    <i class="fa fa-edit"></i> <span>AJAX</span>
                     <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                 </a>
                 <ul class="treeview-menu">

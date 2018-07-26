@@ -37,7 +37,6 @@
 
         <%-- Main content --%>
         <section class="content container-fluid">
-            <%-- div.col-lg-12 --%>
             <div class="col-lg-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
@@ -72,7 +71,6 @@
                     </div>
                 </div>
             </div>
-            <%-- ./ div.col-lg-12 --%>
 
             <%-- 댓글 수정/삭제를 위한 Modal 영역 --%>
             <div class="modal fade" id="modifyModal" role="dialog">
