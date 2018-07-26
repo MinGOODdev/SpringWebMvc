@@ -73,6 +73,16 @@
                     <li><a href="${path}/article/paging/search/list"><i class="fa fa-list"></i>게시글 목록</a></li>
                 </ul>
             </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-edit"> <span>AJAX</span></i>
+                    <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="${path}/reply/test"><i class="fa fa-pencil"></i> 댓글 작성</a></li>
+                </ul>
+            </li>
         </ul>
         <%-- /.sidebar-menu --%>
     </section>

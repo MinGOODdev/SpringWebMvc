@@ -24,3 +24,42 @@ JSON에서 사용한다는 것이 차이점입니다.
     <url-pattern>/*</url-pattern>
 </filter-mapping>
 ```
+
+### JS 코드를 이용한 댓글 목록 가져오기
+* jQuery를 이용하여 특정 게시글(1번째 게시글)의 댓글 목록을 배열 형태로 가져옵니다.
+```
+<script>
+    var articleNo = 1;
+    $.getJSON("/replies/all/" + articleNo, function (data) {
+        console.log(data);
+    });
+</script>
+```
+
+* 댓글 목록
+```
+<script>
+    var articleNo = 1;
+    getReplies();
+    
+    function getReplies() {
+        $.getJSON("/replies/all/" + articleNo, function (data) {
+            console.log(data);
+
+            var str = "";
+            $(data).each(function () {
+                str += "<li data-replyNo='" + this.replyNo + "' class='replyLi'>"
+                    + "<p class='replyText'>" + this.replyText + "</p>"
+                    + "<p class='replyWriter'>" + this.replyWriter + "</p>"
+                    + "<button type='button' class='btn btn-xs btn-success' data-toggle='modal' data-target='#modifyModal'>댓글 수정</button>"
+                    + "</li>"
+                    + "<hr/>";
+            });
+            $("#replies").html(str);
+        })
+    }
+</script>
+```
+* ```<li>```태그 속성에 **data-replyNo** 와 같이 **data-** 로 시작되는 속성은 이름이나 그 개수에 관계 없이<br/>
+id나 name 속성을 대신해서 사용하기에 편리합니다.
+* 이 속성을 통해 댓글 수정/삭제 처리시 댓글 번호를 설정합니다.
