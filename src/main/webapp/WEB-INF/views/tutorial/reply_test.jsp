@@ -54,6 +54,9 @@
                             <input type="text" class="form-control" id="newReplyWriter" name="replyWriter"
                                    placeholder="댓글 내용을 입력해주세요.">
                         </div>
+                        <div class="pull-right">
+                            <button type="button" id="replyAddBtn" class="btn btn-primary"><i class="fa fa-save"></i> 댓글 저장</button>
+                        </div>
                     </div>
 
                     <div class="box-footer">
@@ -137,6 +140,40 @@
             $("#replies").html(str);
         })
     }
+
+    // 댓글 저장 버튼 클릭 이벤트 발생시
+    $("#replyAddBtn").on("click", function () {
+        // 화면으로부터 입력 받은 변수값 처리
+        var replyText = $("#newReplyText");
+        var replyWriter = $("#newReplyWriter");
+
+        var replyTextVal = replyText.val();
+        var replyWriterVal = replyWriter.val();
+
+        // AJAX 통신 : POST
+        $.ajax({
+            type : "post",
+            url : "/replies",
+            headers : {
+                "Content-type" : "application/json",
+                "X-HTTP-Method-Override" : "POST"
+            },
+            dataType : "text",
+            data : JSON.stringify({
+                articleNo : articleNo,
+                replyText : replyTextVal,
+                replyWriter : replyWriterVal
+            }),
+            success : function (result) {
+                if (result == "regSuccess") {
+                    alert("댓글 등록 완료");
+                }
+                getReplies();           // 댓글 목록 출력 함수 호출
+                replyText.val("");      // 댓글 내용 초기화
+                replyWriter.val("");    // 댓글 작성자 초기화
+            }
+        });
+    });
 </script>
 
 </body>

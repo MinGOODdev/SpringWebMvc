@@ -8,7 +8,7 @@
         SELECT replyNo, articleNo, replyText, replyWriter, regDate, updateDate
         FROM tb_reply
         WHERE articleNo = #{articleNo}
-        ORDER BY replyNo
+        ORDER BY replyNo DESC
     </select>
 
     <insert id="createReply">
