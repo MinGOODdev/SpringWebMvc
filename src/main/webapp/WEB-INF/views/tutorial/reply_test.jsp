@@ -26,8 +26,8 @@
         <%-- Content Header (Page header) --%>
         <section class="content-header">
             <h1>
-                메인페이지
-                <small>스프링연습예제</small>
+                 AJAX 댓글 테스트
+                <small>스프링 연습 예제</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="/"><i class="fa fa-dashboard"></i> Main</a></li>
@@ -91,8 +91,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="replyText">댓글 내용</label>
-                                <input type="text" class="form-control" id="replyText" name="replyText"
-                                       placeholder="댓글 내용을 입력해주세요.">
+                                <input type="text" class="form-control" id="replyText" name="replyText" placeholder="댓글 내용을 입력해주세요.">
                             </div>
                             <div class="form-group">
                                 <label for="replyWriter">댓글 작성자</label>
@@ -103,7 +102,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
                             <button type="button" class="btn btn-success modalModBtn">수정</button>
-                            <button type="button" class="btn-danger modalDelBtn">삭제</button>
+                            <button type="button" class="btn btn-danger modalDelBtn">삭제</button>
                         </div>
                     </div>
                 </div>
@@ -123,7 +122,8 @@
 <script>
     var articleNo = 1;
     getReplies();
-    
+
+    // 댓글 목록 출력
     function getReplies() {
         $.getJSON("/replies/all/" + articleNo, function (data) {
             console.log(data);
@@ -171,6 +171,73 @@
                 getReplies();           // 댓글 목록 출력 함수 호출
                 replyText.val("");      // 댓글 내용 초기화
                 replyWriter.val("");    // 댓글 작성자 초기화
+            }
+        });
+    });
+
+    // 댓글 수정 GET
+    $("#replies").on("click", ".replyLi button", function () {
+        var reply = $(this).parent();
+
+        var replyNo = reply.attr("data-replyNo");
+        var replyText = reply.find(".replyText").text();
+        var replyWriter = reply.find(".replyWriter").text();
+
+        $("#replyNo").val(replyNo);
+        $("#replyText").val(replyText);
+        $("#replyWriter").val(replyWriter);
+    });
+
+    // 댓글 수정 PUT
+    $(".modalModBtn").on("click", function () {
+        var reply = $(this).parent().parent();          // 댓글 선택자
+        var replyNo = reply.find("#replyNo").val();     // 댓글 번호
+        var replyText = reply.find("#replyText").val(); // 수정한 댓글 내용
+
+        // AJAX 통신 : PUT
+        $.ajax({
+            type : "put",
+            url : "/replies/" + replyNo,
+            headers : {
+                "Content-type" : "application/json",
+                "X-HTTP-Method-Override" : "PUT"
+            },
+            data : JSON.stringify(
+                {replyText : replyText}
+            ),
+            dataType : "text",
+            success : function (result) {
+                console.log("result : " + result);
+                if (result == "modifySuccess") {
+                    alert("댓글 수정 완료");
+                    $("#modifyModal").modal("hide");    // Modal 닫기
+                    getReplies();                       // 댓글 목록 갱신
+                }
+            }
+        });
+    });
+
+    // 댓글 삭제
+    $(".modalDelBtn").on("click", function () {
+        // 댓글 번호
+        var replyNo = $(this).parent().parent().find("#replyNo").val();
+
+        // AJAX 통신 : DELETE
+        $.ajax({
+            type : "delete",
+            url : "/replies/" + replyNo,
+            headers : {
+                "Content-type" : "application/json",
+                "X-HTTP-Method-Override" : "DELETE"
+            },
+            dataType : "text",
+            success : function (result) {
+                console.log("result : " + result);
+                if (result == "deleteSuccess") {
+                    alert("댓글 삭제 완료");
+                    $("#modifyModal").modal("hide");    // Modal 닫기
+                    getReplies();                       // 댓글 목록 갱신
+                }
             }
         });
     });
