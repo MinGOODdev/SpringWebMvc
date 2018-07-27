@@ -121,7 +121,9 @@
 
 <script>
     var articleNo = 1;
-    getReplies();
+    var replyPageNum = 1;
+    // getReplies();
+    getRepliesPaging(replyPageNum);
 
     // 댓글 목록 출력
     function getReplies() {
@@ -241,6 +243,58 @@
             }
         });
     });
+
+    // 댓글 목록 페이징 함수
+    function getRepliesPaging(page) {
+        $.getJSON("/replies/" + articleNo + "/" + page, function (data) {
+            console.log(data);
+
+            var str = "";
+
+            $(data.replies).each(function () {
+                str += "<li data-replyNo='" + this.replyNo + "' class=replyLi'>"
+                    + "<p class='replyText'>" + this.replyText + "</p>"
+                    + "<p class='replyWriter'>" + this.replyWriter + "</p>"
+                    + "<button type='button' class='btn btn-xs btn-success' data-toggle='modal' data-target='#modifyModal'>댓글 수정</button>"
+                    + "</li>"
+                    + "<hr/>";
+            });
+            $("#replies").html(str);
+
+            // 페이지 번호 출력 함수 호출
+            printPageNumbers(data.pageMaker);
+        });
+    }
+
+    // 댓글 목록 페이지 번호 출력 함수
+    function printPageNumbers(pageMaker) {
+        var str = "";
+
+        // 이전 버튼 활성화
+        if (pageMaker.prev) {
+            str += "<li><a href='" + (pageMaker.startPage - 1) + "'>이전</a></li>";
+        }
+
+        // 페이지 번호
+        for (var i = pageMaker.startPage, len = pageMaker.endPage; i <= len; ++i) {
+            var strClass = pageMaker.criteria.page == i ? 'class=active' : '';
+            str += "<li " + strClass+ "><a href='" + i + "'>" + i + "</a></li>";
+        }
+
+        // 다음 버튼 활성화
+        if (pageMaker.next) {
+            str += "<li><a href='" + (pageMaker.endPage + 1) + "'>다음</a></li>";
+        }
+
+        $(".pagination-sm").html(str);
+    }
+
+    // 목록 페이지 번호 클릭 이벤트
+    $(".pagination").on("click", "li a", function (event) {
+        event.preventDefault();
+        replyPageNum = $(this).attr("href");    // 목록 페이지 번호 추출
+        getRepliesPaging(replyPageNum);         // 목록 페이지 호출
+    })
 </script>
 
 </body>
