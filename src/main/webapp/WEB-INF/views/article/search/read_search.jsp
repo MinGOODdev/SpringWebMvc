@@ -37,8 +37,9 @@
 
         <%-- Main content --%>
         <section class="content container-fluid">
-            <p>Article FindOne</p>
+            <p>Article FindOne(Pagination + Search)</p>
             <div class="col-lg-12">
+
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">글제목 : ${article.title}</h3>
@@ -79,7 +80,7 @@
                         <form class="form-horizontal">
                             <div class="form-group margin">
                                 <div class="col-sm-10">
-                                    <textarea name="newReplyText" id="new ReplyText" rows="3" class="form-control"
+                                    <textarea name="newReplyText" id="newReplyText" rows="3" class="form-control"
                                               placeholder="댓글 내용을 입력하세요." style="resize: none"></textarea>
                                 </div>
                                 <div class="col-sm-2">
@@ -122,6 +123,55 @@
                     </div>
                 </div>
                 <%-- ./ 댓글 목록 & 페이징 영역 --%>
+
+                <%-- 댓글 수정 modal 영역 --%>
+                <div class="modal fade" id="modModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title">댓글 수정</h4>
+                            </div>
+                            <div class="modal-body" data-rno>
+                                <input type="hidden" class="replyNo">
+                                <textarea name="replyText" id="replyText" rows="3"
+                                          class="form-control" style="resize: none"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
+                                <button type="button" class="btn btn-primary modalModBtn">수정</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%-- ./ 댓글 수정 modal 영역 --%>
+
+                <%-- 댓글 삭제 modal 영역 --%>
+                <div class="modal fade" id="delModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title">댓글 삭제</h4>
+                                <input type="hidden" class="rno">
+                            </div>
+                            <div class="modal-body" data-rno>
+                                <p>댓글을 삭제하시겠습니까?</p>
+                                <input type="hidden" class="replyNo">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">아니오</button>
+                                <button type="button" class="btn btn-primary modalDelBtn">예</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%-- ./ 댓글 삭제 modal 영역 --%>
+
             </div>
         </section>
         <%-- /.content --%>
@@ -262,6 +312,63 @@
             });
         });
 
+        // 댓글 수정을 위한 modal에 해당 댓글의 값 불러오기
+        $(".repliesDiv").on("click", ".replyDiv", function (event) {
+            var reply = $(this);
+            $(".replyNo").val(reply.attr("data-replyNo"));
+            $("#replyText").val(reply.find(".oldReplyText").text());
+        });
+
+        // modal의 댓글 수정 버튼 클릭 이벤트
+        $(".modalModBtn").on("click", function () {
+            var replyNo = $(".replyNo").val();
+            var replyText = $("#replyText").val();
+
+            $.ajax({
+                type : "put",
+                url : "/replies/" + replyNo,
+                headers : {
+                    "Content-type" : "application/json",
+                    "X-HTTP-Method-Override" : "PUT"
+                },
+                dataType : "text",
+                data : JSON.stringify({
+                    replyText : replyText
+                }),
+                success : function (result) {
+                    console.log("result : " + result);
+                    if (result === "modifySuccess") {
+                        alert("댓글이 수정되었습니다.");
+                        getRepliesPaging("/replies/" + articleNo + "/" + replyPageNum);
+                        $("#modModal").modal("hide");   // modal close
+                    }
+                }
+            });
+        });
+
+        // modal의 댓글 삭제 버튼 클릭 이벤트
+        $(".modalDelBtn").on("click", function () {
+            var replyNo = $(".replyNo").val();
+
+            $.ajax({
+                type : "delete",
+                url : "/replies/" + replyNo,
+                headers : {
+                    "Content-Type" : "application/json",
+                    "X-HTTP-Method-Override" : "DELETE"
+                },
+                dataType : "text",
+                success : function (result) {
+                    console.log("result : " + result);
+                    if (result === "deleteSuccess") {
+                        alert("댓글이 삭제되었습니다.");
+                        getRepliesPaging("/replies/" + articleNo + "/" + replyPageNum);
+                        $("#delModal").modal("hide");   // modal close
+                    }
+                }
+            });
+        });
+
 
 
         var formObj = $("form[role='form']");
@@ -278,14 +385,6 @@
             if (replyCnt > 0) {
                 alert("댓글이 달린 게시글은 삭제할수 없습니다.");
                 return;
-            }
-            var arr = [];
-            $(".uploadedFileList li").each(function () {
-                arr.push($(this).attr("data-src"));
-            });
-            if (arr.length > 0) {
-                $.post("/article/file/deleteAll", {files: arr}, function () {
-                });
             }
             formObj.attr("action", "/article/paging/search/remove");
             formObj.submit();
