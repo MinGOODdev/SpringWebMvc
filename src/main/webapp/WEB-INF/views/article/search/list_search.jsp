@@ -76,7 +76,7 @@
                                 <c:if test="${pageMaker.prev}">
                                     <%--<li><a href="${path}/article/listPaging?page=${pageMaker.startPage - 1}">이전</a></li>--%>
                                     <li>
-                                        <a href="${path}/article/paging/search/list${pageMaker.makeQuery(pageMaker.makeSearch(pageMaker.startPage - 1))}">이전</a>
+                                        <a href="${path}/article/paging/search/list${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전</a>
                                     </li>
                                 </c:if>
                                 <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="index">
