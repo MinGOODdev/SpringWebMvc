@@ -227,6 +227,41 @@
             getRepliesPaging("/replies/" + articleNo + "/" + replyPageNum);
         });
 
+        // 댓글 저장 버튼 클릭 이벤트
+        $(".replyAddBtn").on("click", function () {
+            // 입력 form 선택자
+            var replyWriterObj = $("#newReplyWriter");
+            var replyTextObj = $("#newReplyText");
+            var replyWriter = replyWriterObj.val();
+            var replyText = replyTextObj.val();
+
+            // 댓글 입력 처리 수행
+            $.ajax({
+                type : "post",
+                url : "/replies/",
+                headers : {
+                    "Content-Type" : "application/json",
+                    "X-HTTP-Method-Override" : "POST"
+                },
+                dataType : "text",
+                data : JSON.stringify({
+                    articleNo : articleNo,
+                    replyWriter : replyWriter,
+                    replyText : replyText
+                }),
+                success: function (result) {
+                    console.log("result : " + result);
+                    if (result === "regSuccess") {
+                        alert("댓글이 등록되었습니다.");
+                        replyPageNum = 1;       // 페이지를 1로 초기화
+                        getRepliesPaging("/replies/" + articleNo + "/" + replyPageNum);
+                        replyTextObj.val("");   // 댓글 입력창 공백 처리
+                        replyWriterObj.val("");
+                    }
+                }
+            });
+        });
+
 
 
         var formObj = $("form[role='form']");
