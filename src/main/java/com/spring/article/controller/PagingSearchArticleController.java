@@ -143,7 +143,7 @@ public class PagingSearchArticleController {
     redirectAttributes.addAttribute("keyword", searchCriteria.getSearchType());
     redirectAttributes.addFlashAttribute("msg", "removeSuccess");
 
-    return "redirect:/article/paging/search/list_search";
+    return "redirect:list";
   }
 
 }

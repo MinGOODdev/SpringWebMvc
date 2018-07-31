@@ -50,7 +50,8 @@
                         <div class="user-block">
                             <img class="img-circle img-bordered-sm" src="/dist/img/user1-128x128.jpg" alt="user image">
                             <span class="username"><a href="#">${article.writer}</a></span>
-                            <span class="description"><fmt:formatDate pattern="yyyy-MM-dd a HH:mm" value="${article.regDate}"/></span>
+                            <span class="description"><fmt:formatDate pattern="yyyy-MM-dd a HH:mm"
+                                                                      value="${article.regDate}"/></span>
                         </div>
                     </div>
                     <div class="box-footer">
@@ -68,6 +69,59 @@
                         </div>
                     </div>
                 </div>
+
+                <%-- 댓글 입력 영역 --%>
+                <div class="box box-warning">
+                    <div class="box-header with-border">
+                        <a class="link-black text-lg"><i class="fa fa-pencil"></i> 댓글 작성</a>
+                    </div>
+                    <div class="box-body">
+                        <form class="form-horizontal">
+                            <div class="form-group margin">
+                                <div class="col-sm-10">
+                                    <textarea name="newReplyText" id="new ReplyText" rows="3" class="form-control"
+                                              placeholder="댓글 내용을 입력하세요." style="resize: none"></textarea>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" id="newReplyWriter" name="newReplyWriter" class="form-control"
+                                           placeholder="댓글 작성자를 입력해주세요.">
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-primary btn-block replyAddBtn"><i
+                                            class="fa fa-save"></i> 저장
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <%-- ./ 댓글 입력 영역 --%>
+
+                <%-- 댓글 목록 & 페이징 영역 --%>
+                <div class="box box-success collapsed-box">
+                    <%-- 댓글 유무 & 댓글 개수 & 댓글 펼치기, 접기 --%>
+                    <div class="box-header with-border">
+                        <a href="" class="link-black text-lg"><i class="fa fa-comments-o margin-r-5 replyCount"></i></a>
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <%-- 댓글 목록 --%>
+                    <div class="box-body repliesDiv">
+
+                    </div>
+                    <%-- 댓글 페이징 --%>
+                    <div class="box-footer">
+                        <div class="text-center">
+                            <ul class="pagination pagination-sm no-margin">
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <%-- ./ 댓글 목록 & 페이징 영역 --%>
             </div>
         </section>
         <%-- /.content --%>
@@ -82,6 +136,99 @@
 <%@ include file="../../include/plugin_js.jsp" %>
 <script>
     $(document).ready(function () {
+        var articleNo = "${article.articleNo}";     // 현재 게시글 번호
+        var replyPageNum = 1;                       // 댓글 페이지 번호 초기화
+
+        // 댓글 내용 : 줄바꿈 / 공백 처리
+        Handlebars.registerHelper("escape", function (replyText) {
+            var text = Handlebars.Utils.escapeExpression(replyText);
+            text = text.replace(/(\r\n|\n|\r)/gm, "<br/>");
+            text = text.replace(/( )/gm, "&nbsp;");
+            return new Handlebars.SafeString(text);
+        });
+
+        // 댓글 등록일자 : 날짜 / 시간
+        Handlebars.registerHelper("prettifyDate", function (timeValue) {
+            var dateObj = new Date(timeValue);
+            var year = dateObj.getFullYear();
+            var month = dateObj.getMonth() + 1;
+            var date = dateObj.getDate();
+            var hours = dateObj.getHours();
+            var minutes = dateObj.getMinutes();
+
+            // 2자리 숫자로 변환
+            month < 10 ? month = '0' + month : month;
+            date < 10 ? date = '0' + date : date;
+            hours < 10 ? hours = '0' + hours : hours;
+            minutes < 10 ? minutes = '0' + minutes : minutes;
+            return year + "-" + month + "-" + date + " " + hours + ":" + minutes;
+        });
+
+        // 댓글 목록 함수 호출
+        getRepliesPaging("/replies/" + articleNo + "/" + replyPageNum);
+
+        function getRepliesPaging(repliesUri) {
+            $.getJSON(repliesUri, function (data) {
+                printReplyCount(data.pageMaker.totalCount);
+                printReplies(data.replies, $(".repliesDiv"), $("#replyTemplate"));
+                printReplyPaging(data.pageMaker, $(".pagination"));
+            });
+        }
+
+        // 댓글 갯수 출력 함수
+        function printReplyCount(totalCount) {
+            var replyCount = $(".replyCount");
+            var collapsedBox = $(".collapsed-box");
+
+            // 댓글이 없을 경우
+            if (totalCount === 0) {
+                replyCount.html(" 댓글이 없습니다. 의견을 남겨주세요.");
+                collapsedBox.find(".btn-box-tool").remove();
+                return;
+            }
+
+            // 댓글이 존재하는 경우
+            replyCount.html(" 댓글 목록 (" + totalCount + ")");
+            collapsedBox.find(".box-tools").html(
+                "<button type='button' class='btn btn-box-tool' data-widget='collapse'>"
+                + "<i class='fa fa-plus'></i>"
+                + "</button>"
+            );
+        }
+
+        // 댓글 목록 출력 함수
+        function printReplies(replyArr, targetArea, templateObj) {
+            var replyTemplate = Handlebars.compile(templateObj.html());
+            var html = replyTemplate(replyArr);
+            $(".replyDiv").remove();
+            targetArea.html(html);
+        }
+
+        // 댓글 페이징 출력 함수
+        function printReplyPaging(pageMaker, targetArea) {
+            var str = "";
+            if (pageMaker.prev) {
+                str += "<li><a href='" + (pageMaker.startPage - 1) + "'>이전</a></li>";
+            }
+            for (var i = pageMaker.startPage, len = pageMaker.endPage; i <= len; ++i) {
+                var strClass = pageMaker.criteria.page == i ? "class=active" : "";
+                str += "<li " + strClass + "><a href='" + i + "'>" + i + "</a></li>";
+            }
+            if (pageMaker.next) {
+                str += "<li><a href='" + (pageMaker.endPage + 1) + "'>다음</a></li>";
+            }
+            targetArea.html(str);
+        }
+
+        // 댓글 페이지 번호 클릭 이벤트
+        $(".pagination").on("click", "li a", function (event) {
+            event.preventDefault();
+            replyPageNum = $(this).attr("href");
+            getRepliesPaging("/replies/" + articleNo + "/" + replyPageNum);
+        });
+
+
+
         var formObj = $("form[role='form']");
         console.log(formObj);
 
@@ -92,6 +239,19 @@
         });
 
         $(".delBtn").on("click", function () {
+            var replyCnt = $(".replyDiv").length;
+            if (replyCnt > 0) {
+                alert("댓글이 달린 게시글은 삭제할수 없습니다.");
+                return;
+            }
+            var arr = [];
+            $(".uploadedFileList li").each(function () {
+                arr.push($(this).attr("data-src"));
+            });
+            if (arr.length > 0) {
+                $.post("/article/file/deleteAll", {files: arr}, function () {
+                });
+            }
             formObj.attr("action", "/article/paging/search/remove");
             formObj.submit();
         });
@@ -102,6 +262,33 @@
             formObj.submit();
         });
     });
+</script>
+
+<%--
+댓글 목록 (하나의 댓글을 구성하는 템플릿 코드)
+Handlerbars의 {{#each.}}{{/each}}은 JSTL의 <c:forEach>처럼 배열의 루프를 처리하기 위해 사용
+prettifyDate와 escape은 Handlerbars의 확장 기능을 사용한 것으로 JS 코드에서 처리
+--%>
+<script id="replyTemplate" type="text/x-handlersbars-template">
+    {{#each.}}
+    <div class="post replyDiv" data-replyNo={{replyNo}}>
+        <div class="user-block">
+            <img src="/dist/img/user1-128x128.jpg" alt="user image" class="img-circle img-bordered-sm">
+            <span class="username">
+                <a href="#">{{replyWriter}}</a>
+                <a href="#" class="pull-right btn-box-tool replyDelBtn" data-toggle="modal" data-target="#delModal">
+                    <i class="fa fa-times"> 삭제</i>
+                </a>
+                <a href="#" class="pull-right btn-box-tool replyModBtn" data-toggle="modal" data-target="#modModal">
+                    <i class="fa fa-edit"> 수정</i>
+                </a>
+            </span>
+            <span class="description">{{prettifyDate regDate}}</span>
+        </div>
+        <div class="oldReplyText">{{{escape replyText}}}</div>
+        <br/>
+    </div>
+    {{/each}}
 </script>
 
 </body>
